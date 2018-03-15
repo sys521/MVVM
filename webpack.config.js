@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 // 分离css的插件
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-
+const webpack = require('webpack')
 module.exports = {
   entry: './src/index.js',
   output: {
@@ -11,6 +11,7 @@ module.exports = {
     path: path.join(__dirname,'./dist'),
     publicPath: '/'
   },
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -37,6 +38,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin(['dist']),
     new ExtractTextPlugin({
       filename: 'css/[name].css',

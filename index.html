@@ -6,8 +6,16 @@
     <title></title>
   </head>
   <body>
-    <div id="app-box"></div>
-    <div id="haha"></div>
+    <div id="app">
+      <p>我的名字是:</p>
+      <h2>{{name}}</h2>
+      <input v-model="name" />
+      <button v-on:click ="changeName">点我</button>
+      <ul>
+        <h3>this is test!</h3>
+        <p>you should just try!!</p>
+      </ul>
+    </div>
     <!-- built files will be auto injected -->
   </body>
 </html>

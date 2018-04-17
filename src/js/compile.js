@@ -3,10 +3,8 @@ class Compile {
   constructor (el,vm) {
     this.$vm = vm
     this.$el = document.querySelector(el)
-    console.log(this.$el)
     if (this.$el) {
       this.$fragment = this.CreateFragment(this.$el)
-      console.log(this.$el)
       this.init()
       this.$el.appendChild(this.$fragment)
     }
@@ -30,13 +28,10 @@ class Compile {
 
       if (this.isElementNode(node)) {
 
-        console.log(node, 'element-node')
         this.compile(node)
       } else if (this.isTextNode(node) && reg.test(text)) {
 
-        console.log(node, 'test-node')
         let dirVal = text.match(reg)[1]
-        console.log(dirVal)
         this.compileText(node, dirVal)
       }
       if (node.childNodes && node.childNodes.length) {
@@ -58,12 +53,8 @@ class Compile {
     Array.prototype.forEach.call(nodeAttrs, (e) => {
       let attrName = e.name
       if (this.isDirective(attrName)) {
-        console.log(attrName)
         let dirVal = e.value
         let dir = attrName.substring(2)
-
-        console.log(dirVal)
-        console.log(dir)
         if (this.isEventDirective(dir)) {
           compileTool.eventHandler(node, this.$vm, dirVal, dir)
         } else {
@@ -83,8 +74,6 @@ class Compile {
   }
 
   compileText (node, dirVal) {
-    console.log(node, 'test-node')
-    console.log(dirVal)
     compileTool.text(node, this.$vm, dirVal, 'text');
   } 
 }
@@ -106,9 +95,7 @@ const compileTool = {
     })
   },
   bind (node, vm, dirVal, dir) {
-    console.log(vm)
     let updateFn = updater[dir + 'Updater']
-    console.log(this._getVMval(vm, dirVal))
     updateFn && updateFn(node, this._getVMval(vm, dirVal))
 
     new Watcher(vm, dirVal, function(value, oldValue) {
@@ -124,7 +111,6 @@ const compileTool = {
     }
   },
   _getVMval (vm, dirVal) {
-    console.log(vm)
     let val = vm.$options.data[dirVal]
     return val
   },
@@ -134,7 +120,6 @@ const compileTool = {
 }
 const updater = {
   textUpdater (node, value) {
-    console.log(node)
     node.textContent = typeof value === 'undefined' ? '' : value
   },
   modelUpdater (node, value, oldValue) {
